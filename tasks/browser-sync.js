@@ -44,7 +44,8 @@ module.exports = function (grunt) {
             }
         }
 
-        bs.init(patterns || [], options, function (err) {
+        var usedPortPath = 'browserSync.' + this.target + '.usedPort';
+        bs.init(patterns || [], options, function (err, bs) {
             if (err) {
                 done(err);
                 return;
@@ -54,6 +55,7 @@ module.exports = function (grunt) {
                 options.watchtask   ||
                 options.background  ||
                 !options.keepalive) {
+                grunt.config.set(usedPortPath, bs.options.get('port'));
                 done();
             }
         });
